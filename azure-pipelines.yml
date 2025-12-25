@@ -35,10 +35,8 @@ jobs:
         targetType: 'inline'
         script: |
           cd terratest
-          
           go mod init terratest
           go get github.com/gruntwork-io/terratest@v0.54.0
           go get github.com/stretchr/testify/assert
           go mod tidy
-          
           go test -v
