@@ -17,6 +17,7 @@ jobs:
     displayName: "Terraform init plan"
     steps:
     - task: TerraformTask@5
+      displayName: "Terraform init"
       inputs:
         provider: 'azurerm'
         command: 'init'
@@ -29,6 +30,7 @@ jobs:
         backendAzureRmKey: 'terratest.tfstate'
 
     - task: Bash@3
+      displayName: "Terratest"
       inputs:
         targetType: 'inline'
         script: |
