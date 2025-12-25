@@ -29,14 +29,35 @@ jobs:
         backendAzureRmContainerName: 'tfstatefile-container'
         backendAzureRmKey: 'terratest.tfstate'
 
+    - task: AzureCLI@2
+      displayName: "Azure Login for Terratest"
+      inputs:
+        azureSubscription: 'azure_ado_sp'
+        scriptType: bash
+        scriptLocation: inlineScript
+        inlineScript: |
+          az account show
+
+    # - task: Bash@3
+    #   displayName: "Terratest"
+    #   inputs:
+    #     targetType: 'inline'
+    #     script: |
+    #       cd terratest
+    #       go mod init terratest
+    #       go get github.com/gruntwork-io/terratest@v0.54.0
+    #       go get github.com/stretchr/testify/assert
+    #       go mod tidy
+    #       go test -v
+
     - task: Bash@3
-      displayName: "Terratest"
+      displayName: "Run Terratest"
       inputs:
         targetType: 'inline'
         script: |
           cd terratest
-          go mod init terratest
-          go get github.com/gruntwork-io/terratest@v0.54.0
-          go get github.com/stretchr/testify/assert
           go mod tidy
-          go test -v
+          go test -v -timeout 30m
+
+
+
