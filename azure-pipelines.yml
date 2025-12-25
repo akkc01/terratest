@@ -1,0 +1,27 @@
+---
+trigger: none
+  # branches:
+  #   include:
+  #     # - main
+  #     # - features/*
+pool:
+  name: akkc_agent
+
+variables:
+  - group: backend_cred    # variable group name for backend details
+
+# # 1. Initialization and Formatting
+
+steps:
+- task: Bash@3
+  inputs:
+    targetType: 'inline'
+    script: |
+      cd terratest
+      
+      go mod init terratest
+      go get github.com/gruntwork-io/terratest@v0.54.0
+      go get github.com/stretchr/testify/assert
+      go mod tidy
+      
+      go test -v
