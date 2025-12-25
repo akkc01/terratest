@@ -38,26 +38,26 @@ jobs:
         inlineScript: |
           az account show
 
-    # - task: Bash@3
-    #   displayName: "Terratest"
-    #   inputs:
-    #     targetType: 'inline'
-    #     script: |
-    #       cd terratest
-    #       go mod init terratest
-    #       go get github.com/gruntwork-io/terratest@v0.54.0
-    #       go get github.com/stretchr/testify/assert
-    #       go mod tidy
-    #       go test -v
-
     - task: Bash@3
-      displayName: "Run Terratest"
+      displayName: "Terratest"
       inputs:
         targetType: 'inline'
         script: |
           cd terratest
+          go mod init terratest
+          go get github.com/gruntwork-io/terratest@v0.54.0
+          go get github.com/stretchr/testify/assert
           go mod tidy
-          go test -v -timeout 30m
+          go test -v
+
+    # - task: Bash@3
+    #   displayName: "Run Terratest"
+    #   inputs:
+    #     targetType: 'inline'
+    #     script: |
+    #       cd terratest
+    #       go mod tidy
+    #       go test -v -timeout 30m
 
 
 
