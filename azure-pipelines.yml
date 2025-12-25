@@ -14,7 +14,7 @@ variables:
 
 jobs:
   - job: initplan
-    displayName: "Terraform init plan"
+    displayName: "Terraform init"
     steps:
     - task: TerraformTask@5
       displayName: "Terraform init"
