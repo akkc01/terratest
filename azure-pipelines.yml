@@ -49,6 +49,7 @@ jobs:
           go get github.com/stretchr/testify/assert
           go mod tidy
           go test -v
+        workingDirectory: '$(System.DefaultWorkingDirectory)'
 
     # - task: Bash@3
     #   displayName: "Run Terratest"
