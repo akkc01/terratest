@@ -13,8 +13,8 @@ variables:
 # # 1. Initialization and Formatting
 
 jobs:
-  - job: initplan
-    displayName: "Terraform init"
+  - job: terratest
+    displayName: "Terratest Infra test"
     steps:
     # - task: TerraformTask@5
     #   displayName: "Terraform init"
