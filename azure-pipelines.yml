@@ -38,27 +38,38 @@ jobs:
         inlineScript: |
           az account show
 
-    - task: Bash@3
-      displayName: "Terratest"
+    - task: AzureCLI@2
       inputs:
-        targetType: 'inline'
-        script: |
+        azureSubscription: 'azure_ado_sp'
+        scriptType: 'bash'
+        scriptLocation: 'inlineScript'
+        inlineScript: |
           cd $(System.DefaultWorkingDirectory)/terratest
           go mod init "terratest"
           go get github.com/gruntwork-io/terratest@v0.54.0
           go get github.com/stretchr/testify/assert
           go mod tidy
           go test -v
-        workingDirectory: '$(System.DefaultWorkingDirectory)'
+        workingDirectory: '(System.DefaultWorkingDirectory)'
 
-    # - task: Bash@3
-    #   displayName: "Run Terratest"
+
+
+    # - task: AzureCLI@2
+    #   displayName: "Terratest (Authorized)"
     #   inputs:
-    #     targetType: 'inline'
-    #     script: |
-    #       cd terratest
+    #     azureSubscription: 'azure_ado_sp'
+    #     scriptType: bash
+    #     scriptLocation: inlineScript
+    #     inlineScript: |
+    #       cd $(System.DefaultWorkingDirectory)/terratest
+    #       go mod init terratest || true
+    #       go get github.com/gruntwork-io/terratest@v0.54.0
+    #       go get github.com/stretchr/testify/assert
     #       go mod tidy
-    #       go test -v -timeout 30m
+
+    #       # Terratest run
+    #       go test -v
+
 
 
 
