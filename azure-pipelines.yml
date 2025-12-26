@@ -16,29 +16,30 @@ jobs:
   - job: initplan
     displayName: "Terraform init"
     steps:
-    - task: TerraformTask@5
-      displayName: "Terraform init"
-      inputs:
-        provider: 'azurerm'
-        command: 'init'
-        workingDirectory: '$(System.DefaultWorkingDirectory)/env/dev'
-        backendServiceArm: 'azure_ado_sp'
-        backendAzureRmOverrideSubscriptionID: '009fad33-c09c-4841-af38-57dd79870d40'
-        backendAzureRmResourceGroupName: 'akkc'
-        backendAzureRmStorageAccountName: 'storageaccountakkc007'
-        backendAzureRmContainerName: 'tfstatefile-container'
-        backendAzureRmKey: 'terratest.tfstate'
+    # - task: TerraformTask@5
+    #   displayName: "Terraform init"
+    #   inputs:
+    #     provider: 'azurerm'
+    #     command: 'init'
+    #     workingDirectory: '$(System.DefaultWorkingDirectory)/env/dev'
+    #     backendServiceArm: 'azure_ado_sp'
+    #     backendAzureRmOverrideSubscriptionID: '009fad33-c09c-4841-af38-57dd79870d40'
+    #     backendAzureRmResourceGroupName: 'akkc'
+    #     backendAzureRmStorageAccountName: 'storageaccountakkc007'
+    #     backendAzureRmContainerName: 'tfstatefile-container'
+    #     backendAzureRmKey: 'terratest.tfstate'
+
+    # - task: AzureCLI@2
+    #   displayName: "Azure Login for Terratest"
+    #   inputs:
+    #     azureSubscription: 'azure_ado_sp'
+    #     scriptType: bash
+    #     scriptLocation: inlineScript
+    #     inlineScript: |
+    #       az account show
 
     - task: AzureCLI@2
-      displayName: "Azure Login for Terratest"
-      inputs:
-        azureSubscription: 'azure_ado_sp'
-        scriptType: bash
-        scriptLocation: inlineScript
-        inlineScript: |
-          az account show
-
-    - task: AzureCLI@2
+      displayName: "Terratest Task"
       inputs:
         azureSubscription: 'azure_ado_sp'
         scriptType: 'bash'
@@ -52,23 +53,6 @@ jobs:
           go test -v
         workingDirectory: '(System.DefaultWorkingDirectory)'
 
-
-
-    # - task: AzureCLI@2
-    #   displayName: "Terratest (Authorized)"
-    #   inputs:
-    #     azureSubscription: 'azure_ado_sp'
-    #     scriptType: bash
-    #     scriptLocation: inlineScript
-    #     inlineScript: |
-    #       cd $(System.DefaultWorkingDirectory)/terratest
-    #       go mod init terratest || true
-    #       go get github.com/gruntwork-io/terratest@v0.54.0
-    #       go get github.com/stretchr/testify/assert
-    #       go mod tidy
-
-    #       # Terratest run
-    #       go test -v
 
 
 
