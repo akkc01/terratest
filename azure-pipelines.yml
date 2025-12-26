@@ -43,7 +43,7 @@ jobs:
       inputs:
         targetType: 'inline'
         script: |
-          cd terratest
+          cd $(System.DefaultWorkingDirectory)/terratest
           go mod init "terratest"
           go get github.com/gruntwork-io/terratest@v0.54.0
           go get github.com/stretchr/testify/assert
